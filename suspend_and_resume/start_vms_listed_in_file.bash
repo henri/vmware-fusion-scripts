@@ -8,6 +8,7 @@
 
 # Version history 
 # v1.0 - initial release
+# v1.1 - improvements relating to vm startup failure reporting
 
 # basic script which will attempt to start all VMWare Fusion systems which are listed in a file.
 
@@ -38,6 +39,7 @@ num_arguments=${#}
 path_to_vm_to_start="start"
 exit_status=0
 num_vms_succesfully_started=0
+num_vms_failed_to_start=0
 
 # check there is a single parameter passed to this script (input file)
 if [ $num_arguments != 1 ] ; then
@@ -116,10 +118,12 @@ if [ -e "${VMRUN_PATH}" ] ; then
                 fi
                 ((run_count++))
             done
-            if [ ${start_next_vm_return_code} == 3 ] ; then
+            # if [ ${start_next_vm_return_code} == 3 ] ; then
+			if [ ${start_next_vm_return_code} != 0 ] ; then
                 # report the problem with starting this VM
                 echo "    ERROR! : VM from input file would not able to be started : ${next_vm_to_start}"
-                exit_status=3
+				((num_vms_failed_to_start++))
+                exit_status=${start_next_vm_return_code}
             fi
         fi
     done

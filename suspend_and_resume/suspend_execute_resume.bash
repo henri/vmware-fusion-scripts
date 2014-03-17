@@ -8,6 +8,7 @@
 
 # Version history 
 # v1.0 - initial release
+# v1.1 - bug fix relating to checking that the vm's were resumed succesfully
 
 # 
 # This script is designed to suspend the VMware Fusion VM's running on this machine, 
@@ -79,7 +80,7 @@ function start_vms_which_were_suspended {
     export list_number_of_vms_started="YES"
     "${parent_directory}/${name_of_resume_script}" "${suspended_vm_file_list}" | tee -a "${vm_start_script_output}"
     vm_start_status_return_code=$PIPESTATUS
-    num_vms_started=`cat "${vm_start_script_output}" | grep "Total Number of VM's successfully started : " | awk -F "Total Number of VM's successfully started : " '{print $2}'`
+    num_vms_started=`cat "${vm_start_script_output}" | grep "Total Number of VM's successfully started : " | tail -n 1 | awk -F "Total Number of VM's successfully started : " '{print $2}'`
     if [ ${vm_start_status_return_code} != 0 ] ; then
         echo "ERROR! : There were problems starting one or more of the VM's."
         start_vms_on_clean_exit="NO"
