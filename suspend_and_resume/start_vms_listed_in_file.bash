@@ -3,6 +3,7 @@
 # (C) 2011 Henri Shustak
 # Lucid Information Systems
 # http://www.lucidsystems.org
+# http://www.lucid.technology/tools/vmware/fusion-scripts
 
 # Released under the GNU GPL v3 or later.
 
