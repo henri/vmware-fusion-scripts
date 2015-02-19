@@ -1,4 +1,4 @@
-# VMWare Fusion Scrits #
+# VMWare Fusion Scripts #
 
 About
 --------
