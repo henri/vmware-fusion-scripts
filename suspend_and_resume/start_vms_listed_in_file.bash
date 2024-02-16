@@ -10,7 +10,7 @@
 # Version history 
 # v1.0 - initial release
 # v1.1 - improvements relating to vm startup failure reporting
-# v1.2 - added option to hide VMWare Fusion once all VM's have been resumed
+# v1.2 - added the hiding option when resuming VMWare Fusion
 
 # basic script which will attempt to start all VMWare Fusion systems which are listed in a file.
 
@@ -29,6 +29,21 @@ if [ "${list_number_of_vms_started}" == "" ] ; then
 fi
 
 
+# hide vmware on resume option
+#
+#    note : In order to enable this you will need to grant accessability access to cron, 
+#           the terminal or which ever app will kick this script off otherwise key strokes can not be sent ;
+#           this is a security risk ; enable at your own risk!
+#
+#         macOS crontab : /usr/sbin/cron [System Preferences -> Security -> Accesability]
+#         macOS common terminals : /Applications/Utilities/Terminal.app /Applications/iTerm.app /Applications/Warp.app etc
+#
+#         https://stackoverflow.com/questions/72900568/osascript-via-cron-cannot-send-keystrokes-macos
+#         execution error: System Events got an error: osascript is not allowed to send keystrokes. (1002)
+#
+hide_vmware_fusion_on_resume="NO" # alteratlivy you may want to run VMWare Fusion Headless or Force Quit the front end
+
+
 # internal variables
 OLD_VMRUN_PATH="/Library/Application Support/VMware Fusion/vmrun"
 VMRUN_PATH="/Applications/VMware Fusion.app/Contents/Library/vmrun"
@@ -42,7 +57,6 @@ path_to_vm_to_start="start"
 exit_status=0
 num_vms_succesfully_started=0
 num_vms_failed_to_start=0
-hide_vmware_fusion_on_resume="NO" # alteratlivy you may want to run VMWare Fusion Headless or Force Quit the front end
 
 # check there is a single parameter passed to this script (input file)
 if [ $num_arguments != 1 ] ; then
@@ -130,13 +144,17 @@ if [ -e "${VMRUN_PATH}" ] ; then
             fi
         fi
     done
-    if [ "${list_number_of_vms_started}" == "YES" ] ; then
-        echo "    Total Number of VM's successfully started : ${num_vms_succesfully_started}"
-    fi
     if [ "${hide_vmware_fusion_on_resume}" == "YES" ] ; then
         # this just switches to VMWare Fusion and Simulates command-h (hide) due to VMWare Fusions lack of AppleScript support
         # another approach could be to minimise the windows (this could potentially leave the app visiable and the library visable)
+        echo "    Hiding VMWare Fusion [command-h] (via Apple Script key strokes)"
         osascript -e 'tell application "VMWare Fusion" to activate' && osascript -e 'tell application "System Events" to key code 4 using command down'
+        if [ ${?} != 0 ] ; then
+            echo "    WARNING! : Unable to hide VMWare Fusion, you will likely need to configure [System Preferences -> Security -> Accessibaility] to allow the terminal / cron"
+        fi
+    fi
+    if [ "${list_number_of_vms_started}" == "YES" ] ; then
+        echo "    Total Number of VM's successfully started : ${num_vms_succesfully_started}"
     fi
 else
     echo "    ERROR! : Unable to locate the VMWare Fusion run file."
