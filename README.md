@@ -14,7 +14,7 @@ Currently there is a single set of scripts dedicated to suspending and starting 
 Below is an example usage to kick this script into gear and to execute the included example rsync backup script 
   - note you will need to create some folders and edit the example backup script.
 
-`$ cd /Volumes/vmware-volume/virtual_machines/bin/suspend_and_resume/ && ../copy_vms_to_backup_directory.bash'`
+`$ cd /Volumes/vmware-volume/virtual_machines/bin/suspend_and_resume/ && ../copy_vms_to_backup_directory.bash`
 
 If you have any handy VMWare fusion scripts, then fork the project add your scripts and then put in a pull request. 
 
