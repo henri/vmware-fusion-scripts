@@ -29,18 +29,24 @@ if [ "${list_number_of_vms_started}" == "" ] ; then
 fi
 
 
-# hide vmware on resume option
+# hide vmware on resume option - security warning and security settings information
 #
 #    note : In order to enable this you will need to grant accessability access to cron, 
 #           the terminal or which ever app will kick this script off otherwise key strokes can not be sent ;
+#           in addition, cron will probably require full disk permissions and you will need to manually 
+#           wait for cron to start the task and then allow accessability access to cron in order to hide VMWare Fusion
 #           this is a security risk ; enable at your own risk!
 #
-#         macOS crontab : /usr/sbin/cron [System Preferences -> Security -> Accesability]
-#         macOS common terminals : /Applications/Utilities/Terminal.app /Applications/iTerm.app /Applications/Warp.app etc
+#           macOS crontab : /usr/sbin/cron [System Preferences -> Security -> Accesability]
+#           macOS common terminals : /Applications/Utilities/Terminal.app /Applications/iTerm.app /Applications/Warp.app etc
 #
-#         https://stackoverflow.com/questions/72900568/osascript-via-cron-cannot-send-keystrokes-macos
-#         execution error: System Events got an error: osascript is not allowed to send keystrokes. (1002)
-#         absolute path to "System Events" : "/System/Library/CoreServices/System Events"
+#           https://stackoverflow.com/questions/72900568/osascript-via-cron-cannot-send-keystrokes-macos
+#           execution error: System Events got an error: osascript is not allowed to send keystrokes. (1002)
+#           absolute path to "System Events" : "/System/Library/CoreServices/System Events"
+#
+#           If you see "Operation not permitted" in cron output or system mail, this is likely due to 
+#           security / privaicy issues on macOS 10.15 and later. You may need to enable cron to have full disk access
+#           again, this is a secuity risk ; enable this option (set to "YES") at your own risk!
 #
 hide_vmware_fusion_on_resume="NO" # alteratlivy you may want to run VMWare Fusion Headless or Force Quit the front end
 
