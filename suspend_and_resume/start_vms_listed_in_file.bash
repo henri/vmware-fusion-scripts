@@ -67,13 +67,13 @@ num_vms_failed_to_start=0
 
 # check there is a single parameter passed to this script (input file)
 if [ $num_arguments != 1 ] ; then
-	echo "ERROR! : This script requires a single argument. The path to an input file."
-      echo "         It is expected that this file will contain one or more lines."
-      echo "         It is also expected that each line will contain the path to a VM's which is to be started."
-      echo ""
-	echo "         Usage : ${0} /path/to/file/containing/list/of/paths/to/vms_to_start.txt"
-      echo ""
-	exit -1
+    echo "ERROR! : This script requires a single argument. The path to an input file."
+    echo "         It is expected that this file will contain one or more lines."
+    echo "         It is also expected that each line will contain the path to a VM's which is to be started."
+    echo "" 
+    echo "         Usage : ${0} /path/to/file/containing/list/of/paths/to/vms_to_start.txt"
+    echo ""
+    exit -1
 fi
 
 # try using the old vmrun path should the current path not be available
