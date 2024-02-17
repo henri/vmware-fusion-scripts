@@ -40,6 +40,7 @@ fi
 #
 #         https://stackoverflow.com/questions/72900568/osascript-via-cron-cannot-send-keystrokes-macos
 #         execution error: System Events got an error: osascript is not allowed to send keystrokes. (1002)
+#         absolute path to "System Events" : "/System/Library/CoreServices/System Events"
 #
 hide_vmware_fusion_on_resume="NO" # alteratlivy you may want to run VMWare Fusion Headless or Force Quit the front end
 
