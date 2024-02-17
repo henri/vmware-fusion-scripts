@@ -48,6 +48,9 @@ fi
 #           security / privaicy issues on macOS 10.15 and later. You may need to enable cron to have full disk access
 #           again, this is a secuity risk ; enable this option (set to "YES") at your own risk!
 #
+#           Finally note that if you have a screen saver enabled and you enable this option, due to the approach used
+#           Key strokes entered, VMWare Fusion will likely not be hidden if the screen saver is enabled.
+#
 hide_vmware_fusion_on_resume="NO" # alteratlivy you may want to run VMWare Fusion Headless or Force Quit the front end
 
 
