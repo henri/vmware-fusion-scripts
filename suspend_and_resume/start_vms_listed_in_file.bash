@@ -112,7 +112,7 @@ function start_next_vm {
         fi
     else
         echo "    ERROR! : Unable to start the VM; it was not found at the specified path : ${next_vm_to_start}"
-	  exit_status=4
+      exit_status=4
         return 4
     fi
     ((num_vms_succesfully_started++))
@@ -150,10 +150,10 @@ if [ -e "${VMRUN_PATH}" ] ; then
                 ((run_count++))
             done
             # if [ ${start_next_vm_return_code} == 3 ] ; then
-			if [ ${start_next_vm_return_code} != 0 ] ; then
+            if [ ${start_next_vm_return_code} != 0 ] ; then
                 # report the problem with starting this VM
                 echo "    ERROR! : VM from input file would not able to be started : ${next_vm_to_start}"
-				((num_vms_failed_to_start++))
+                ((num_vms_failed_to_start++))
                 exit_status=${start_next_vm_return_code}
             fi
         fi
@@ -161,9 +161,10 @@ if [ -e "${VMRUN_PATH}" ] ; then
     if [ "${hide_vmware_fusion_on_resume}" == "YES" ] ; then
         # this just switches to VMWare Fusion and Simulates command-h (hide) due to VMWare Fusions lack of AppleScript support
         # another approach could be to minimise the windows (this could potentially leave the app visiable and the library visable)
-        echo "    Hiding VMWare Fusion [command-h] (via Apple Script key strokes)"
+        # echo "    Hiding VMWare Fusion [command-h] (via Apple Script key strokes)"
         # osascript -e 'tell application "VMWare Fusion" to activate' && osascript -e 'tell application "System Events" to key code 4 using command down'
-	osascript -e  'tell application "System Events" to set visible of application process "VMware Fusion" to false'
+        echo "    Hiding VMWare Fusion (via Apple Script)" 
+        osascript -e  'tell application "System Events" to set visible of application process "VMware Fusion" to false'
         if [ ${?} != 0 ] ; then
             echo "    WARNING! : Unable to hide VMWare Fusion, you will likely need to configure [System Preferences -> Security -> Accessibaility] to allow the terminal / cron"
         fi
@@ -180,6 +181,5 @@ fi
 
 
 exit ${exit_status}
-
 
 
