@@ -11,6 +11,7 @@
 # v1.0 - initial release
 # v1.1 - improvements relating to vm startup failure reporting
 # v1.2 - added the hiding option when resuming VMWare Fusion
+# v1.3 - support for hiding with screen saver running
 
 # basic script which will attempt to start all VMWare Fusion systems which are listed in a file.
 
@@ -50,6 +51,9 @@ fi
 #
 #           Finally note that if you have a screen saver enabled and you enable this option, due to the approach used
 #           Key strokes entered, VMWare Fusion will likely not be hidden if the screen saver is enabled.
+#
+#           The above note is somewhat related to the commented out keystroke approach. Now with direct access
+#           to hide via apple script implimented, the security issues wiill be somewhat mitigated (slightly).
 #
 hide_vmware_fusion_on_resume="NO" # alteratlivy you may want to run VMWare Fusion Headless or Force Quit the front end
 
@@ -158,7 +162,8 @@ if [ -e "${VMRUN_PATH}" ] ; then
         # this just switches to VMWare Fusion and Simulates command-h (hide) due to VMWare Fusions lack of AppleScript support
         # another approach could be to minimise the windows (this could potentially leave the app visiable and the library visable)
         echo "    Hiding VMWare Fusion [command-h] (via Apple Script key strokes)"
-        osascript -e 'tell application "VMWare Fusion" to activate' && osascript -e 'tell application "System Events" to key code 4 using command down'
+        # osascript -e 'tell application "VMWare Fusion" to activate' && osascript -e 'tell application "System Events" to key code 4 using command down'
+	osascript -e  'tell application "System Events" to set visible of application process "VMware Fusion" to false'
         if [ ${?} != 0 ] ; then
             echo "    WARNING! : Unable to hide VMWare Fusion, you will likely need to configure [System Preferences -> Security -> Accessibaility] to allow the terminal / cron"
         fi
